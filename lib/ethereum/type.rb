@@ -52,6 +52,4 @@ module Ethereum
       end
     end
   end
-
 end
-
