@@ -1,0 +1,27 @@
+[
+  {
+    "constant":false,
+    "inputs":
+      [
+        {"name":"x","type":"uint32"},
+        {"name":"y","type":"bool"}
+      ],
+    "name":"baz",
+    "outputs":
+      [
+        {"name":"r","type":"bool"}
+      ],
+    "type":"function"
+  },
+  {
+    "constant":false,
+    "inputs":
+      [
+        {"name":"name","type":"string"},
+        {"name":"data","type":"uint256[]"}
+      ],
+    "name":"sam",
+    "outputs":[],
+    "type":"function"
+  }
+]

@@ -1,0 +1,51 @@
+[
+  {
+  "constant" : false,
+  "inputs" : [
+    {
+    "name" : "_id",
+    "type" : "hash256"
+  }
+  ],
+  "name" : "deposit",
+  "outputs" : [],
+  "type" : "function"
+},
+{
+  "inputs" : [
+    {
+    "indexed" : true,
+    "name" : "_from",
+    "type" : "address"
+  },
+  {
+    "indexed" : false,
+    "name" : "_value",
+    "type" : "uint256"
+  }
+  ],
+  "name" : "AnonymousDeposit",
+  "type" : "event"
+},
+{
+  "inputs" : [
+    {
+    "indexed" : true,
+    "name" : "_from",
+    "type" : "address"
+  },
+  {
+    "indexed" : false,
+    "name" : "_id",
+    "type" : "hash256"
+  },
+  {
+    "indexed" : false,
+    "name" : "_value",
+    "type" : "uint256"
+  }
+  ],
+  "name" : "Deposit",
+  "type" : "event"
+}
+]
