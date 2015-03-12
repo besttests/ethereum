@@ -1,12 +1,14 @@
 module Ethereum
   class Contract
+    include Utils
+
     attr_reader :address, :json, :events, :functions, :rpc
 
     def initialize(json, addr = nil)
       @json = JSON.parse json
       link(addr) if addr
 
-      @events    = @json.select {|item| item['type'] == 'event' }.map {|e| Event.new(e) }
+      @events    = @json.select {|item| item['type'] == 'event' }.map {|e| Event::ABI.new(e) }
       @functions = @json.select {|item| item['type'] == 'function' }.map {|f| Function.new(f) }
     end
 
@@ -32,11 +34,21 @@ module Ethereum
     end
 
     def link(addr)
-      @address = addr =~ /^0x/ ? addr : "0x#{addr}"
+      @address = encode_address(addr)
     end
 
     def bind(rpc)
       @rpc = rpc
+    end
+
+    def filter(name, options={})
+      event_abi = event name
+      raise "event not found: #{name}" unless event_abi
+      Filter.new self, event_abi, options
+    end
+
+    def event(name)
+      events.find {|e| e.name == name }
     end
   end
 end

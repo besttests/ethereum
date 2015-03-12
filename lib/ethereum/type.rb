@@ -7,8 +7,10 @@ module Ethereum
 
     def initialize(name)
       md = name.match /(\D+)(\d*)/
+
       @type = md[1]
       @bytes = md[2].to_i
+
       if PrefixedTypes.include?(@type) or NamedTypes.include?(@type)
         if @bytes == 0
           case @type
@@ -36,12 +38,25 @@ module Ethereum
     def === (atype)
       if atype.is_a?(Ethereum::Type)
         @type == atype.type and
-          (atype.bytes == 0 or @bytes == atype.bytes)
+          (atype.bytes == 0 or @type.bytes == 0 or @bytes == atype.bytes)
       end
     end
 
     def wrap(value)
       value.is_a?(Argument) ? value : Argument.new(self, value)
+    end
+
+    def decode(bytes)
+      case @type
+      when 'uint', 'int'
+        bytes.hex
+      when 'address'
+        bytes[-40..-1]
+      when 'bool'
+        bytes.hex == 1
+      else
+        bytes
+      end
     end
 
     class << self

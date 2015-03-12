@@ -1,4 +1,14 @@
 module Ethereum
+  module Utils
+    def encode_address(addr)
+      addr =~ /^0x/ ? addr : "0x#{addr}"
+    end
+
+    def sha3(s)
+      Digest::SHA3.hexdigest(s, 256)
+    end
+  end
+
   module HandyMethods
     #     uint    #
     def uint(val)

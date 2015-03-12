@@ -1,6 +1,8 @@
 require 'rubygems'
 require 'bundler/setup'
 
+require 'pry'
+
 require_relative '../lib/ethereum'
 
 RSpec.configure do |config|
@@ -10,4 +12,8 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = [:should, :expect]
   end
+end
+
+def load_abi_json(name)
+  File.read(File.expand_path "../fixtures/#{name}.json", __FILE__)
 end

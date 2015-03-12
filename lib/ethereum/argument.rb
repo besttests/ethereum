@@ -34,14 +34,15 @@ module Ethereum
     end
 
     def to_bytes
+      padding = PADDING * 2
       if @length == -1
         case @type.type
         when 'uint', 'int'
-          @value.to_s(16).rjust(64, '0')
+          @value.to_s(16).rjust(padding, '0')
         when 'bool'
-          (@value ? 1 : 0).to_s(16).rjust(64, '0')
+          (@value ? 1 : 0).to_s(16).rjust(padding, '0')
         when 'string'
-          @value.unpack('H*').first.ljust(64, '0')
+          @value.unpack('H*').first.ljust(padding, '0')
         else
           @value
         end

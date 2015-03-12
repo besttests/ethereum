@@ -1,6 +1,9 @@
 module Ethereum
   class Function
+    include Utils
+
     attr_reader :name, :types, :json
+
     def initialize(json)
       raise "Require function interface definition!" unless json['type'] == 'function'
       @json = json
@@ -25,10 +28,6 @@ module Ethereum
     def method_id
       arg_types = @json['inputs'].map{|input| input['type']}.join(',')
       sha3("#{name}(#{arg_types})")[0..7]
-    end
-
-    def sha3(s)
-      Digest::SHA3.hexdigest(s, 256)
     end
 
     private
