@@ -17,7 +17,7 @@ module Ethereum
       if mth
         data = mth.to_data(*args)
         if name.to_s =~ /!$/
-          @rpc.eth_transact to: @address, data: data
+          @rpc.eth_transact from: @rpc.coinbase, to: @address, data: data
         elsif name.to_s =~ /\?$/
           @rpc.eth_call to: @address, data: data
         else

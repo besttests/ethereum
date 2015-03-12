@@ -43,6 +43,9 @@ module Ethereum
           (@value ? 1 : 0).to_s(16).rjust(padding, '0')
         when 'string'
           @value.unpack('H*').first.ljust(padding, '0')
+        when 'address'
+          @value = @value[2..-1] if @value =~ /^0x/
+          @value.rjust(padding, '0')
         else
           @value
         end
