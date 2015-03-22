@@ -4,7 +4,7 @@ describe Ethereum::Filter do
   let(:contract) { Ethereum::Contract.new( load_abi_json 'event') }
 
   before do
-    contract.bind Ethereum::RPC.new
+    contract.bind Class.new.include(Ethereum::RPC).new
     contract.link '0x123456789ABCDEF'
     contract.rpc.stub(:eth_newFilter).and_return(1)
   end

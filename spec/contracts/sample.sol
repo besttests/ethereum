@@ -1,5 +1,3 @@
-import "owned";
-
 contract ClientReceipt is owned {
   event AnonymousDeposit(address indexed _from, uint _value);
   event Deposit(address indexed _from, uint _id, uint _value);
@@ -24,4 +22,5 @@ contract ClientReceipt is owned {
     Drain(msg.sender, _to, _value);
   }
 }
+import "owned";
 
