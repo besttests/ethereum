@@ -13,24 +13,25 @@ module Ethereum
     end
 
     def method_missing(name, *args)
-      mth = find_function(name.to_s, args)
-      if mth
-        data = mth.to_data(*args)
-        if name.to_s =~ /!$/
-          @rpc.eth_transact from: @rpc.coinbase, to: @address, data: data
-        elsif name.to_s =~ /\?$/
-          @rpc.eth_call to: @address, data: data
-        else
-          data
-        end
-      else
-        super
-      end
+      mth = function(name.to_s, *args)
+
+      mth ? mth.call : super
     end
 
-    def find_function(name, args)
-      name = name.delete '!?'
-      @functions.find {|f| f.match?(name, args) }
+    def function(name, *args)
+      fun_name = name.to_s.delete '!?'
+      fun = @functions.find {|f| f.match?(fun_name, args) }
+      if fun
+        type = if name.to_s =~ /!$/
+                 Function::FUNTYPE_TRANSACT
+               elsif name.to_s =~ /\?$/
+                 Function::FUNTYPE_CALL
+               else
+                 Function::FUNTYPE_DATA
+               end
+        fun.invoked_as(type).bind(self)
+        fun
+      end
     end
 
     def link(addr)

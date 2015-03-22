@@ -1,5 +1,7 @@
 module Ethereum
   module RPC
+    include Utils
+
     class JSONRPCError < RuntimeError; end
     class ConnectionRefusedError < StandardError; end
 
@@ -10,8 +12,12 @@ module Ethereum
       #@uri = URI.parse(options[:uri] || 'http://10.211.55.7:8080')
     #end
 
+    def set_uri(uri)
+      @uri = URI.parse(uri)
+    end
+
     def set_coinbase(coinbase)
-      @coinbase = coinbase
+      @coinbase = encode_address coinbase
     end
 
     def method_missing(name, *args)
